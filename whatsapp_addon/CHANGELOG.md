@@ -2,6 +2,7 @@
 
 - Updated to Baileys to V6.7.19
 - Updated docker base image to 18.1.4
+- Switch to pre-built images
 
 ## 1.5.1
 
