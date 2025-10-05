@@ -11,7 +11,7 @@ arch:
   - aarch64
   - amd64
   - i386
-image: "ghcr.io/deeppuple77/my-addon-{arch}"
+image: "ghcr.io/deeppuple77/ha-whatsapp-addon-{arch}"
 init: false
 map:
   - config:rw
