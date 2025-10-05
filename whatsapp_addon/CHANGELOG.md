@@ -1,3 +1,8 @@
+## 1.5.2
+
+- Updated to Baileys to V6.7.19
+- Updated docker base image to 18.1.4
+
 ## 1.5.1
 
 - Updated Baileys to V6.7.18
