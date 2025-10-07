@@ -1,6 +1,12 @@
 ARG TARGETARCH
-ARG BUILD_FROM=ghcr.io/home-assistant/${TARGETARCH}-base:latest
-FROM ${BUILD_FROM}
+ARG BUILD_ARCH
+
+FROM ghcr.io/home-assistant/$( \
+  if [ "$TARGETARCH" = "arm64" ]; then echo "aarch64"; \
+  elif [ "$TARGETARCH" = "arm" ]; then echo "armv7"; \
+  elif [ "$TARGETARCH" = "386" ]; then echo "i386"; \
+  else echo "$TARGETARCH"; fi \
+)-base:latest
 
 LABEL maintainer="deeppurple77"
 LABEL org.opencontainers.image.source="https://github.com/deeppurple77/ha-whatsapp-addon"
