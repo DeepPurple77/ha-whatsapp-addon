@@ -39,8 +39,8 @@ jobs:
       - name: Build and push multi-arch image
         uses: docker/build-push-action@v6
         with:
-          context: ./ha-whatsapp-addon
-          push: true
+          file: ./ha-whatsapp-addon/Dockerfile
+	  push: true
           platforms: linux/amd64,linux/armv7,linux/aarch64,linux/386,linux/armhf
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
