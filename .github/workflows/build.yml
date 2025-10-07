@@ -36,8 +36,8 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v5
         with:
-          context: ./ha-whatsapp-addon
-          file: ./ha-whatsapp-addon/Dockerfile
+          context: ./whatsapp_addon
+          file: ./whatsapp_addon/Dockerfile
           platforms: linux/amd64,linux/armv7,linux/aarch64,linux/i386,linux/armhf
           push: true
           tags: |
