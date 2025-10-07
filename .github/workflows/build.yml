@@ -1,29 +1,26 @@
-name: Build and Publish Home Assistant Add-on
+name: Build and Publish Add-on
 
 on:
   push:
     tags:
-      - '*'            # Run on any tag (e.g. v1.5.2 or 1.5.2)
-  workflow_dispatch:    # Allow manual run from Actions tab
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: deeppurple77/ha-whatsapp-addon
+      - "*" # build when a tag (e.g. 1.5.2) is pushed
+  workflow_dispatch: # allow manual builds
 
 jobs:
   build:
-    name: Build and Push Multi-Arch Image
+    name: Build multi-arch image
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
-      packages: write
+      packages: write # required for GHCR push
+      id-token: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up QEMU (for cross-building)
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
@@ -32,17 +29,28 @@ jobs:
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push multi-arch image
-        uses: docker/build-push-action@v6
+      - name: Build and push image
+        uses: docker/build-push-action@v5
         with:
+          context: ./ha-whatsapp-addon
           file: ./ha-whatsapp-addon/Dockerfile
-	  push: true
-          platforms: linux/amd64,linux/armv7,linux/aarch64,linux/386,linux/armhf
+          platforms: linux/amd64,linux/armv7,linux/aarch64,linux/i386,linux/armhf
+          push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ghcr.io/deeppurple77/ha-whatsapp-addon:latest
+            ghcr.io/deeppurple77/ha-whatsapp-addon:${{ github.ref_name }}
+          build-args: |
+            BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
+
+      - name: Make GHCR image public
+        run: |
+          curl -s -X PATCH \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/user/packages/container/ha-whatsapp-addon/visibility \
+            -d '{"visibility":"public"}'
 
