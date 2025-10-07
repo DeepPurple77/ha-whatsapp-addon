@@ -1,5 +1,8 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
 FROM ${BUILD_FROM}
+
+LABEL maintainer="deeppurple77"
+LABEL org.opencontainers.image.source="https://github.com/deeppurple77/ha-whatsapp-addon"
 
 RUN apk add --no-cache git npm
 
