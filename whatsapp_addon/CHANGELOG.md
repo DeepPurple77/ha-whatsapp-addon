@@ -1,3 +1,8 @@
+## 1.5.3
+
+- Update to automated Docker build workflow
+- Update Dockerfile to clear the npm cache after install
+
 ## 1.5.2
 
 - Updated to Baileys to V6.7.19
