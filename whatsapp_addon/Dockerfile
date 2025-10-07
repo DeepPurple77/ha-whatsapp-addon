@@ -1,12 +1,5 @@
-ARG TARGETARCH
-ARG BUILD_ARCH
-
-FROM ghcr.io/home-assistant/$( \
-  if [ "$TARGETARCH" = "arm64" ]; then echo "aarch64"; \
-  elif [ "$TARGETARCH" = "arm" ]; then echo "armv7"; \
-  elif [ "$TARGETARCH" = "386" ]; then echo "i386"; \
-  else echo "$TARGETARCH"; fi \
-)-base:latest
+# Use the multi-arch Home Assistant add-on base image
+FROM ghcr.io/hassio-addons/base:stable
 
 LABEL maintainer="deeppurple77"
 LABEL org.opencontainers.image.source="https://github.com/deeppurple77/ha-whatsapp-addon"

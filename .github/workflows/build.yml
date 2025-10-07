@@ -42,9 +42,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/deeppurple77/ha-whatsapp-addon:latest
-            ghcr.io/deeppurple77/ha-whatsapp-addon:${{ github.ref_name }}
-          build-args: |
-            BUILD_ARCH=${{ matrix.arch }}
+            ghcr.io/deeppurple77/ha-whatsapp-addon:${{ github.event.release.tag_name || github.ref_name }}
 
       - name: Make GHCR image public
         run: |
