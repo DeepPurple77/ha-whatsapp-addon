@@ -1,4 +1,5 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
+ARG TARGETARCH
+ARG BUILD_FROM=ghcr.io/home-assistant/${TARGETARCH}-base:latest
 FROM ${BUILD_FROM}
 
 LABEL maintainer="deeppurple77"
