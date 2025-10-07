@@ -1,8 +1,8 @@
 name: Whatsapp
-version: "1.5.3"
+version: "1.5.4-dev"
 slug: whatsapp_addon
 description: Whatsapp addon for send message from Home Assistant
-url: "https://github.com/DeepPurple77/ha-whatsapp-addon/tree/main/whatsapp_addon"
+url: "https://github.com/DeepPurple77/ha-whatsapp-addon/tree/feature/Bailey-7.0.0/whatsapp_addon"
 homeassistant_api: true
 hassio_api: true
 arch:
@@ -11,7 +11,7 @@ arch:
   - aarch64
   - amd64
   - i386
-image: "ghcr.io/deeppurple77/ha-whatsapp-addon"
+image: "ghcr.io/deeppurple77/ha-whatsapp-addon:Bailey-7.0.0-rc5"
 init: false
 map:
   - config:rw
