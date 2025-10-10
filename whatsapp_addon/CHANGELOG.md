@@ -1,3 +1,7 @@
+## 1.5.4
+
+- Updated to Baileys V6.7.20
+
 ## 1.5.3
 
 - Update to automated Docker build workflow
