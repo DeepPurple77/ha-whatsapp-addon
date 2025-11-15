@@ -1,3 +1,7 @@
+## 1.5.5
+- Updated to Baileys V6.7.21
+- Updated HASS-IO base version
+
 ## 1.5.4
 
 - Updated to Baileys V6.7.20
