@@ -1,5 +1,5 @@
 # Use the multi-arch Home Assistant add-on base image
-FROM ghcr.io/hassio-addons/base:stable
+FROM ghcr.io/hassio-addons/base:latest
 
 LABEL maintainer="deeppurple77"
 LABEL org.opencontainers.image.source="https://github.com/deeppurple77/ha-whatsapp-addon"
