@@ -20,13 +20,13 @@ import type {
 	WAGenericMediaMessage,
 	WAMediaUpload,
 	WAMediaUploadFunction,
-	WAMessageContent
+	WAMessageContent,
+	WAMessageKey
 } from '../Types'
 import { type BinaryNode, getBinaryNodeChild, getBinaryNodeChildBuffer, jidNormalizedUser } from '../WABinary'
 import { aesDecryptGCM, aesEncryptGCM, hkdf } from './crypto'
 import { generateMessageIDV2 } from './generics'
 import type { ILogger } from './logger'
-import { decodeAndHydrate } from './proto-utils'
 
 const getTmpFilesDirectory = () => tmpdir()
 
@@ -199,7 +199,7 @@ export const generateProfilePicture = async (
 				quality: 50
 			})
 			.toBuffer()
-	} else if ('jimp' in lib && typeof lib.jimp?.Jimp === 'object') {
+	} else if ('jimp' in lib && typeof lib.jimp?.Jimp === 'function') {
 		const jimp = await (lib.jimp.Jimp as any).read(buffer)
 		const min = Math.min(jimp.width, jimp.height)
 		const cropped = jimp.crop({ x: 0, y: 0, w: min, h: min })
@@ -372,7 +372,7 @@ export const getHttpStream = async (url: string | URL, options: RequestInit & { 
 	}
 
 	// @ts-ignore Node18+ Readable.fromWeb exists
-	return Readable.fromWeb(response.body as any)
+	return response.body instanceof Readable ? response.body : Readable.fromWeb(response.body as any)
 }
 
 type EncryptedStreamOptions = {
@@ -724,7 +724,7 @@ const getMediaRetryKey = (mediaKey: Buffer | Uint8Array) => {
 /**
  * Generate a binary node that will request the phone to re-upload the media & return the newly uploaded URL
  */
-export const encryptMediaRetryRequest = async (key: proto.IMessageKey, mediaKey: Buffer | Uint8Array, meId: string) => {
+export const encryptMediaRetryRequest = async (key: WAMessageKey, mediaKey: Buffer | Uint8Array, meId: string) => {
 	const recp: proto.IServerErrorReceipt = { stanzaId: key.id }
 	const recpBuffer = proto.ServerErrorReceipt.encode(recp).finish()
 
@@ -806,7 +806,7 @@ export const decryptMediaRetryData = async (
 ) => {
 	const retryKey = await getMediaRetryKey(mediaKey)
 	const plaintext = aesDecryptGCM(ciphertext, retryKey, iv, Buffer.from(msgId))
-	return decodeAndHydrate(proto.MediaRetryNotification, plaintext)
+	return proto.MediaRetryNotification.decode(plaintext)
 }
 
 export const getStatusCodeForMediaRetry = (code: number) =>

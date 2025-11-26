@@ -1,3 +1,7 @@
+## 1.5.5-dev
+
+- Baileys 7.0.0 rc9
+
 ## 1.5.3
 
 - Update to automated Docker build workflow
