@@ -1,3 +1,7 @@
+## 1.5.6
+- Update to Baileys V7.0.0-rc9
+- Remove support for armhf, armv7, i386 as per https://github.com/hassio-addons/addon-base/pull/353
+
 ## 1.5.5
 - Updated to Baileys V6.7.21
 - Updated HASS-IO base version
